@@ -1,0 +1,103 @@
+.cell{
+  width: 28px;
+  height: 28px;
+  background-color: #bdbdbd;
+  box-sizing: border-box;
+  font-weight: bold;
+  text-align:center;
+  line-height: 28px;
+  font-size: 20px;
+}
+
+.cell.hidden{
+  border: 2px solid white;
+  border-right: 2px solid #7b7b7b;
+  border-bottom: 2px solid #7b7b7b;
+}
+
+.cell.mine{
+  padding-top: 2px;
+  font-size: 28px;
+}
+
+.cell.mine.revealed{
+  padding-top: 3px;
+}
+
+.cell.revealed{
+  border: 1px solid #7b7b7b;
+  border-right: 0px;
+  border-bottom: 0px;
+}
+
+.cell.false-negative{
+  background-color:red;
+}
+
+.cell.false-positive{
+  position:relative;
+}
+
+.cell.false-positive:before{
+  position: absolute;
+  content: '';
+  background: red;
+  display: block;
+  width: 100%;
+  height: 2px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.cell.false-positive:after{
+  position: absolute;
+  content: '';
+  background: red;
+  display: block;
+  width: 100%;
+  height: 2px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.cell[data-mines='1']{
+  color: blue;
+}
+
+.cell[data-mines='2']{
+  color: green;
+}
+
+.cell[data-mines='3']{
+  color: red;
+}
+
+.cell[data-mines='4']{
+  color: #00007b;
+}
+
+.cell[data-mines='5']{
+  color: #7b0000;
+}
+
+.cell[data-mines='6']{
+  color: purple;
+}
+
+.cell[data-mines='7']{
+  color: cyan;
+}
+
+.cell[data-mines='8']{
+  color: black;
+}

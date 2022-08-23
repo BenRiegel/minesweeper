@@ -1,0 +1,10 @@
+.board{
+  position: relative;
+  border: 3px solid white;
+  border-top: 3px solid #7b7b7b;
+  border-left: 3px solid #7b7b7b;
+}
+
+.row{
+  display:flex;
+}

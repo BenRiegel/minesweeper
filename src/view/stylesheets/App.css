@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border: 4px solid white;
+  border-right: 4px solid #7b7b7b;
+  border-bottom: 4px solid #7b7b7b;
+  background-color: #bdbdbd;
+  padding: 8px;
+
+}
+
+.header{
+  display: flex;
+  padding: 4px;
+  border: 3px solid white;
+  border-top: 3px solid #7b7b7b;
+  border-left: 3px solid #7b7b7b;
+  margin-bottom: 8px;
+  justify-content: space-around;
+}
+
+.container{
+  position:relative;
+}
