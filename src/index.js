@@ -5,7 +5,8 @@ import './view/stylesheets/index.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render( <App initDifficulty='easy' /> );
-
-//<React.StrictMode>
-//</React.StrictMode>
+root.render(
+  <React.StrictMode>
+    <App initDifficulty='easy' />
+  </React.StrictMode>
+);

@@ -19,7 +19,9 @@ export default function Clock(props){
 
   useEffect( () => {
     timer.current.setOnTick(setDuration);
-    return timer.current.clear;
+    return ()=>{
+      timer.current.clear();
+    }
   }, []);
 
   useEffect( () => {
