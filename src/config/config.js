@@ -1,13 +1,13 @@
 //----- local code block -------------------------------------------------------
 
-const EASY = 'Easy';
-const MEDIUM = 'Medium';
-const HARD = 'Hard';
+const BEGINNER = 'Beginner';
+const INTERMEDIATE = 'Intermediate';
+const EXPERT = 'Expert';
 
 const levelsConfig = {
-  [EASY]:   {numRows:10, numColumns:10, numMines:10},
-  [MEDIUM]: {numRows:15, numColumns:15, numMines:15},
-  [HARD]:   {numRows:20, numColumns:20, numMines:99}
+  [BEGINNER]:     {numRows:10, numColumns:10, numMines:10},
+  [INTERMEDIATE]: {numRows:15, numColumns:15, numMines:40},
+  [EXPERT]:       {numRows:16, numColumns:30, numMines:99}
 }
 
 
@@ -15,7 +15,7 @@ const levelsConfig = {
 
 export const levels = Object.keys(levelsConfig);
 
-export const initLevel = EASY;
+export const initLevel = BEGINNER;
 
 export function getDimensions(level){
   return {

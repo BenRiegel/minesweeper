@@ -37,6 +37,7 @@ function createCells(numCells, dimensions, mineIndices){
   return completeCells;
 }
 
+
 //----- export code block ------------------------------------------------------
 
 export default function Field(dimensions, numMines){

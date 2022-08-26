@@ -17,12 +17,6 @@ function sweepContigCells(board, field, dimensions, index){
   });
 }
 
-function getNumMarkedMines(cells){
-  return cells.reduce( (sum, cell) => {
-    return sum + (cell.isMarked ? 1 : 0);
-  }, 0);
-}
-
 function checkFalseNegative(board, field){
   for (let i = 0; i < board.length; i++){
     let boardValue = board[i];
@@ -53,6 +47,7 @@ function checkBoardComplete(board){
   }
   return true;
 }
+
 
 //----- export code block ------------------------------------------------------
 

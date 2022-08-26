@@ -2,7 +2,6 @@
 
 //----- imports ----------------------------------------------------------------
 
-import { useState, useEffect } from 'react';
 import '../stylesheets/Cell.css';
 
 
@@ -13,11 +12,12 @@ export default function Cell(props){
   //----- local functions -----
 
   function calcState(){
-    let gameOver = props.gameOver;
-    let isSwept = (action === 'swept');
-    let isMarked = (action === 'marked');
-    let noAction = (action === null);
-    let hasMine = (props.fieldValue === 'mine');
+    let { board, index, gameOver, fieldValue } = props;
+    let boardValue = board[index];
+    let isSwept = (boardValue === 'swept');
+    let isMarked = (boardValue === 'marked');
+    let noAction = (boardValue === null);
+    let hasMine = (fieldValue === 'mine');
     if (gameOver){
       if (noAction){
         if (hasMine){
@@ -47,38 +47,7 @@ export default function Cell(props){
         return 'swept';
       }
     }
-    return 'hidden';
   }
-
-  function getActionValue(){
-    let { board, index } = props;
-    return board[index];
-  }
-
-  function updateState(){
-    let newState = calcState();
-    if (newState !== state){
-      setState(newState);
-    }
-  }
-
-  function updateAction(){
-    let newAction = getActionValue();
-    if (newAction !== action){
-      setAction(newAction);
-    }
-  }
-
-  //----- state variabless -----
-
-  const [action, setAction] = useState( getActionValue() );
-  const [state, setState] = useState( calcState() );
-
-  //----- effects -----
-
-  useEffect(updateAction, [props.board]);
-  useEffect(updateState, [props.gameOver]);
-  useEffect(updateState, [action]);
 
   //----- jsx block -----
 
@@ -96,8 +65,9 @@ export default function Cell(props){
 
   function renderSwept(){
     return (
-      <div className={ 'cell revealed contig-mines-' + `${props.fieldValue}` }
-           data-index={props.index}></div>
+      <div className={ `cell revealed contig-mines-${props.fieldValue}` }
+           data-index={props.index}>
+      </div>
     );
   }
 
@@ -120,6 +90,7 @@ export default function Cell(props){
   }
 
   function renderCell(){
+    let state = calcState();
     if (state === 'hidden'){
       return renderHidden();
     } else if (state === 'marked'){
