@@ -1,9 +1,5 @@
 //----- export code block ------------------------------------------------------
 
-export function clone(obj){
-  return Object.assign({}, obj);
-}
-
 export function createRandoms( {numRandoms, rangeMax} ){
   let randoms = [];
   while (randoms.length < numRandoms){

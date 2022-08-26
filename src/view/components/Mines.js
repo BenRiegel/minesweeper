@@ -6,16 +6,17 @@ import '../stylesheets/Mines.css';
 
 //----- export code block ------------------------------------------------------
 
-export default function Mines(props){
+export default function Mines( {numMines, numMarks} ){
 
-  function renderMines(){
-    let numRemainingMines = props.field.getNumRemainingMines();
-    return convertTo3Digit(numRemainingMines);
+  function render(){
+    let numRemaining = numMines - numMarks;
+    let numRemaining3Digit = convertTo3Digit(numRemaining);
+    return (
+      <div className='mines-container'>
+        <div className='mines'> {numRemaining3Digit} </div>
+      </div>
+    );
   }
 
-  return (
-    <div className='mines-container'>
-      <div className='mines'> {renderMines()} </div>
-    </div>
-  );
+  return render();
 }

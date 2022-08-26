@@ -5,21 +5,19 @@ import '../stylesheets/Result.css';
 
 //----- export code block ------------------------------------------------------
 
-export default function Result(props){
+export default function Result( {gameOver, didWin} ){
 
-  function renderResult(){
-    if (props.outcome === 'win'){
-      return (<div>You win!</div>);
-    } else if (props.outcome === 'lose'){
-      return (<div>You lose!</div>);
+  function render(){
+    if (gameOver){
+      return (
+        <div className='result'>
+          <div>
+            {didWin ? 'You win!' : 'You lose!'}
+          </div>
+        </div>
+      );
     }
   }
 
-  if (props.outcome){
-    return (
-      <div className='result'>
-        {renderResult()}
-      </div>
-    );
-  }
+  return render();
 }

@@ -1,5 +1,8 @@
+//hidden, swept, marked, correct-mark, incorrect-non-mark, incorrect-mark
+
 //----- imports ----------------------------------------------------------------
 
+import { useState, useEffect } from 'react';
 import '../stylesheets/Cell.css';
 
 
@@ -7,67 +10,131 @@ import '../stylesheets/Cell.css';
 
 export default function Cell(props){
 
-  function renderContent(cell){
-    if ((props.outcome && cell.hasMine) || cell.isMarked){
-      return '*';
-    }
-    if (cell.isSwept && (cell.numContigMines > 0)){
-      return cell.numContigMines;
-    }
-  }
+  //----- local functions -----
 
-  function getClassNames(cell){
-    let classes = ['cell'];
-    let noAction = (!cell.isMarked && !cell.isSwept);
-    let gameOver = props.outcome;
+  function calcState(){
+    let gameOver = props.gameOver;
+    let isSwept = (action === 'swept');
+    let isMarked = (action === 'marked');
+    let noAction = (action === null);
+    let hasMine = (props.fieldValue === 'mine');
     if (gameOver){
       if (noAction){
-        if (cell.hasMine){
-          classes.push('mine');
-          classes.push('revealed');
-          classes.push('false-negative');
+        if (hasMine){
+          return 'incorrect-non-mark';
         } else {
-          classes.push('hidden');
+          return 'hidden';
         }
-      } else if (cell.isMarked){
-        classes.push('mine');
-        classes.push('revealed');
-        if (!cell.hasMine){
-          classes.push('false-positive');
+      } else if (isMarked){
+        if (hasMine){
+          return 'correct-mark';
+        } else {
+          return 'incorrect-mark';
         }
-      } else if (cell.isSwept){
-        classes.push('revealed');
-        if (cell.hasMine){
-          classes.push('false-negative');
-          classes.push('mine');
+      } else if (isSwept){
+        if (hasMine){
+          return 'incorrect-non-mark';
+        } else {
+          return 'swept';
         }
       }
     } else {
       if (noAction){
-        classes.push('hidden');
-      } else if (cell.isMarked){
-        classes.push('hidden');
-        classes.push('mine');
-      } else if (cell.isSwept){
-        classes.push('revealed');
+        return 'hidden';
+      } else if (isMarked){
+        return 'marked';
+      } else if (isSwept){
+        return 'swept';
       }
     }
-    return classes.join(' ');
+    return 'hidden';
   }
 
-  function getNumMines(cell){
-    if (!cell.isMarked && cell.numContigMines > 0){
-      return cell.numContigMines;
+  function getActionValue(){
+    let { board, index } = props;
+    return board[index];
+  }
+
+  function updateState(){
+    let newState = calcState();
+    if (newState !== state){
+      setState(newState);
     }
   }
 
-  return (
-    <div className={getClassNames(props.cell)}
-         data-index={props.index}
-         data-mines={getNumMines(props.cell)}>
-      {
-        renderContent(props.cell)
-      }
-    </div>
-  );
+  function updateAction(){
+    let newAction = getActionValue();
+    if (newAction !== action){
+      setAction(newAction);
+    }
+  }
+
+  //----- state variabless -----
+
+  const [action, setAction] = useState( getActionValue() );
+  const [state, setState] = useState( calcState() );
+
+  //----- effects -----
+
+  useEffect(updateAction, [props.board]);
+  useEffect(updateState, [props.gameOver]);
+  useEffect(updateState, [action]);
+
+  //----- jsx block -----
+
+  function renderHidden(){
+    return (
+      <div className='cell hidden' data-index={props.index}></div>
+    );
+  }
+
+  function renderMarked(){
+    return (
+      <div className='cell hidden mark' data-index={props.index}>*</div>
+    );
+  }
+
+  function renderSwept(){
+    return (
+      <div className={ 'cell revealed contig-mines-' + `${props.fieldValue}` }
+           data-index={props.index}></div>
+    );
+  }
+
+  function renderCorrectMark(){
+    return (
+      <div className='cell revealed mark' data-index={props.index}>*</div>
+    );
+  }
+
+  function renderIncorrectMark(){
+    return (
+      <div className='cell revealed mine false-positive' data-index={props.index}>*</div>
+    );
+  }
+
+  function renderIncorrectNonMark(){
+    return (
+      <div className='cell revealed mine false-negative' data-index={props.index}>*</div>
+    );
+  }
+
+  function renderCell(){
+    if (state === 'hidden'){
+      return renderHidden();
+    } else if (state === 'marked'){
+      return renderMarked()
+    } else if (state === 'swept'){
+      return renderSwept();
+    } else if (state === 'correct-mark'){
+      return renderCorrectMark();
+    } else if (state === 'incorrect-mark'){
+      return renderIncorrectMark();
+    } else if (state === 'incorrect-non-mark'){
+      return renderIncorrectNonMark();
+    }
+  }
+
+  return renderCell();
+
 };

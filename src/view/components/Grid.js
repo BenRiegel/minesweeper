@@ -1,14 +1,14 @@
 //----- imports ----------------------------------------------------------------
 
 import { useEffect } from 'react';
-import { convertTo2DArray, getIndex } from '../../utils/utils.js';
 import Cell from './Cell.js';
+import { convertTo2DArray, getIndex } from '../../utils/utils.js';
 import '../stylesheets/Board.css';
 
 
 //----- export code block ------------------------------------------------------
 
-export default function Board(props){
+export default function Grid(props){
 
   function handleLeftClick(evt){
     if (evt.target.classList.contains('cell')){
@@ -32,25 +32,25 @@ export default function Board(props){
     });
   }, []);
 
-  function renderBoard(){
-    let field = props.field;
-    let cells = field.cells;
-    let numColumns = field.dimensions.numColumns;
-    let rows = convertTo2DArray(cells, numColumns);
+  //----- jsx block -----
+
+  function render(){
+    let rows = convertTo2DArray(props.field, props.dimensions.numColumns);
     return (
-      <div className='board' onClick={handleLeftClick}>
+      <div className='board' onClick={props.gameOver ? null : handleLeftClick}>
         {
           rows.map( (row,i) => (
             <div className='row' key={'row-' + i}>
               {
                 row.map( (cell,j) => {
-                  let index = getIndex(i, j, numColumns);
-                  return (
+                  let index = getIndex(i, j, props.dimensions.numColumns);
+                  return(
                     <Cell key={`${i}-${j}`}
                           index={index}
-                          outcome={props.outcome}
-                          cell={cell} />
-                  );
+                          fieldValue={props.field[index]}
+                          board={props.board}
+                          gameOver={props.gameOver}/>
+                    );
                 })
               }
             </div>
@@ -60,10 +60,5 @@ export default function Board(props){
     );
   }
 
-  return (
-    <>
-    { renderBoard() }
-    </>
-  );
-
+  return render();
 }

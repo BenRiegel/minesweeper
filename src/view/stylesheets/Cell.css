@@ -15,13 +15,13 @@
   border-bottom: 2px solid #7b7b7b;
 }
 
-.cell.mine{
+.cell.mine, .cell.mark{
   padding-top: 2px;
   font-size: 28px;
 }
 
-.cell.mine.revealed{
-  padding-top: 3px;
+.cell.mine.revealed, .cell.mark.revealed{
+  padding-top: 4px;
 }
 
 .cell.revealed{
@@ -70,34 +70,42 @@
   margin: auto;
 }
 
-.cell[data-mines='1']{
+.contig-mines-1:after{
+  content: '1';
   color: blue;
 }
 
-.cell[data-mines='2']{
+.contig-mines-2:after{
+  content: '2';
   color: green;
 }
 
-.cell[data-mines='3']{
+.contig-mines-3:after{
+  content: '3';
   color: red;
 }
 
-.cell[data-mines='4']{
+.contig-mines-4:after{
+  content: '4';
   color: #00007b;
 }
 
-.cell[data-mines='5']{
+.contig-mines-5:after{
+  content: '5';
   color: #7b0000;
 }
 
-.cell[data-mines='6']{
+.contig-mines-6:after{
+  content: '6';
   color: purple;
 }
 
-.cell[data-mines='7']{
+.contig-mines-7:after{
+  content: '7';
   color: cyan;
 }
 
-.cell[data-mines='8']{
+.contig-mines-8:after{
+  content: '8';
   color: black;
 }

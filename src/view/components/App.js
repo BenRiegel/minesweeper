@@ -1,10 +1,8 @@
 //----- imports ----------------------------------------------------------------
 
-import { useReducer, useEffect } from 'react';
-import Field from '../../utils/field.js';
-import { clone } from '../../utils/utils.js';
-import reducer from '../../utils/state.js';
-import Board from './Board.js';
+import { useReducer } from 'react';
+import { reducer, initState } from '../../state/state.js';
+import Grid from './Grid.js';
 import Select from './Select.js';
 import Clock from './Clock.js';
 import Mines from './Mines.js';
@@ -14,51 +12,48 @@ import '../stylesheets/App.css';
 
 //----- export code block ------------------------------------------------------
 
-export default function App(props){
+export default function App(){
 
-  function leftClickAction(cellIndex){
-    dispatch( {actionType:'leftClick', cellIndex} );
+  //----- state variable -----
+
+  const [state, newStateAction] = useReducer(reducer, initState);
+
+  //----- user actions -----
+
+  function leftClickEvent(cellIndex){
+    newStateAction( {type:'leftClick', cellIndex} );
   }
 
-  function rightClickAction(cellIndex){
-    dispatch( {actionType:'rightClick', cellIndex} );
+  function rightClickEvent(cellIndex){
+    newStateAction( {type:'rightClick', cellIndex} );
   }
 
-  function newGameAction(){
-    dispatch( {actionType:'newGame'} );
+  function newGameEvent(){
+    newStateAction( {type:'newGame'} );
   }
 
-  function newDifficultyAction(selectedValue){
-    dispatch( {actionType:'newDifficulty', selectedValue} );
+  function newLevelEvent(selectedLevel){
+    newStateAction( {type:'newLevel', newValue:selectedLevel} );
   }
 
-  const [state, dispatch] = useReducer(reducer, {
-    clockStatus: 'run',
-    difficulty: props.initDifficulty,
-    field: new Field(props.initDifficulty),
-    outcome: null,
-  });
-
-  useEffect( () => {
-    if (state.clockStatus === 'reset'){
-      dispatch( {actionType:'startClock'} );
-    }
-  }, [state]);
+  //----- jsx block -----
 
   return (
     <div className='App'>
       <header className='header'>
-        <Mines field={state.field}/>
-        <button onClick={newGameAction}>Start Over</button>
-        <Select onChange={newDifficultyAction} value={state.difficulty}/>
-        <Clock status={state.clockStatus}/>
+        <Mines numMines={state.numMines} numMarks={state.numMarks}/>
+        <button onClick={newGameEvent}>Start Over</button>
+        <Select onChange={newLevelEvent}/>
+        <Clock field={state.field} gameOver={state.gameOver}/>
       </header>
       <div className='container'>
-        <Board field={state.field}
-               outcome={state.outcome}
-               onLeftClick={leftClickAction}
-               onRightClick={rightClickAction}/>
-        <Result outcome={state.outcome}/>
+        <Grid field={state.field}
+              board={state.board}
+              dimensions={state.dimensions}
+              gameOver={state.gameOver}
+              onLeftClick={leftClickEvent}
+              onRightClick={rightClickEvent}/>
+        <Result gameOver={state.gameOver} didWin={state.didWin}/>
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
 //----- imports ----------------------------------------------------------------
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { convertTo3Digit } from '../../utils/utils.js';
-import Timer from '../../utils/timer.js';
 import '../stylesheets/Clock.css';
 
 
@@ -10,39 +9,56 @@ import '../stylesheets/Clock.css';
 
 export default function Clock(props){
 
-  const [duration, setDuration] = useState(0);
-  const timer = useRef( new Timer() );
+  //----- local functions -----
 
-  function renderDuration(){
-    return convertTo3Digit(duration);
+  function increment(){
+    setDuration(prevValue => prevValue + 1);
   }
 
-  useEffect( () => {
-    timer.current.setOnTick(setDuration);
-    return ()=>{
-      timer.current.clear();
+  function start(){
+    if (interval.current === null){
+      interval.current = setInterval(increment, 1000);
     }
+  }
+
+  function stop(){
+    if (interval.current !== null){
+      clearInterval(interval.current);
+      interval.current = null;
+    }
+  }
+
+  function reset(){
+    stop();
+    setDuration(0);
+    start();
+  }
+
+  //----- state vars -----
+
+  const [duration, setDuration] = useState(0);
+  let interval = useRef(null);
+
+  //----- effects -----
+
+  useEffect( ()=>{
+    start();
+    return stop;
   }, []);
 
-  useEffect( () => {
-    switch(props.status){
-      case 'reset':
-        timer.current.clear();
-        break;
-      case 'run':
-        timer.current.start();
-        break;
-      case 'stop':
-        timer.current.stop();
-        break;
-      default:
-        break;
+  useEffect( ()=>{
+    if (props.gameOver){
+      stop();
     }
-  }, [props.status]);
+  }, [props.gameOver]);
+
+  useEffect(reset, [props.field]);
+
+  //----- jsx -----
 
   return (
     <div className='clock-container'>
-      <div className='clock'> {renderDuration()} </div>
+      <div className='clock'> {convertTo3Digit(duration)} </div>
     </div>
   );
 }
