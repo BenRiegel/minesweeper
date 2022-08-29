@@ -15,13 +15,17 @@
   border-bottom: 2px solid #7b7b7b;
 }
 
-.cell.mine, .cell.mark{
-  padding-top: 2px;
+.cell.mark{
+  background-image: url('../../assets/mark.png');
+}
+
+.cell.mine{
+  padding-top: 4px;
   font-size: 28px;
 }
 
-.cell.mine.revealed, .cell.mark.revealed{
-  padding-top: 4px;
+.cell.mark.revealed{
+  background-position: 1px 1px;
 }
 
 .cell.revealed{
@@ -43,11 +47,11 @@
   content: '';
   background: red;
   display: block;
-  width: 100%;
+  width: 130%;
   height: 2px;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  left: 0;
+  left: -4px;
   right: 0;
   top: 0;
   bottom: 0;
@@ -59,11 +63,11 @@
   content: '';
   background: red;
   display: block;
-  width: 100%;
+  width: 130%;
   height: 2px;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
-  left: 0;
+  left: -4px;
   right: 0;
   top: 0;
   bottom: 0;

@@ -18,34 +18,26 @@ function sweepContigCells(board, field, dimensions, index){
 }
 
 function checkFalseNegative(board, field){
-  for (let i = 0; i < board.length; i++){
-    let boardValue = board[i];
-    let fieldValue = field[i];
-    if (boardValue === 'swept' && fieldValue === 'mine'){
-      return true;
-    }
-  }
-  return false;
+  return board.reduce( (prev, boardValue, index)=>{
+     let fieldValue = field[index];
+     let isFalseNegative = (boardValue === 'swept' && fieldValue === 'mine');
+     return (prev || isFalseNegative);
+   }, false);
 }
 
 function checkFalsePositive(board, field){
-  for (let i = 0; i < board.length; i++){
-    let boardValue = board[i];
-    let fieldValue = field[i];
-    if (boardValue === 'marked' && fieldValue !== 'mine'){
-      return true;
-    }
-  }
-  return false;
+  return board.reduce( (prev, boardValue, index)=>{
+    let fieldValue = field[index];
+    let isFalsePositive = (boardValue === 'marked' && fieldValue !== 'mine');
+    return (prev || isFalsePositive);
+  }, false);
 }
 
 function checkBoardComplete(board){
-  for (let cell of board){
-    if (cell === null){
-      return false;
-    }
-  }
-  return true;
+  return board.reduce( (prev, boardValue)=>{
+    let hasAction = (boardValue !== null);
+    return (prev && hasAction);
+  }, true);
 }
 
 
@@ -96,8 +88,8 @@ export function getNumMarks(board){
   }, 0);
 }
 
-export default function Board(dimensions){
-  let numCells = dimensions.numRows * dimensions.numColumns;
+export default function Board( {numRows, numColumns} ){
+  let numCells = numRows * numColumns;
   let board = Array(numCells).fill(null);
   return board;
 }

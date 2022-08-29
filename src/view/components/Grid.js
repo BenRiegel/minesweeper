@@ -47,9 +47,8 @@ export default function Grid(props){
                   return(
                     <Cell key={`${i}-${j}`}
                           index={index}
-                          field={props.field}
                           fieldValue={props.field[index]}
-                          board={props.board}
+                          boardValue={props.board[index]}
                           gameOver={props.gameOver}/>
                     );
                 })

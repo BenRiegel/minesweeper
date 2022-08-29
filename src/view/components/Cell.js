@@ -2,18 +2,18 @@
 
 //----- imports ----------------------------------------------------------------
 
+import React from 'react'
 import '../stylesheets/Cell.css';
 
 
 //----- export code block ------------------------------------------------------
 
-export default function Cell(props){
+const Cell = React.memo(function(props){
 
   //----- local functions -----
 
   function calcState(){
-    let { board, index, gameOver, fieldValue } = props;
-    let boardValue = board[index];
+    let { gameOver, boardValue, fieldValue } = props;
     let isSwept = (boardValue === 'swept');
     let isMarked = (boardValue === 'marked');
     let noAction = (boardValue === null);
@@ -59,7 +59,7 @@ export default function Cell(props){
 
   function renderMarked(){
     return (
-      <div className='cell hidden mark' data-index={props.index}>*</div>
+      <div className='cell hidden mark' data-index={props.index}></div>
     );
   }
 
@@ -73,13 +73,13 @@ export default function Cell(props){
 
   function renderCorrectMark(){
     return (
-      <div className='cell revealed mark' data-index={props.index}>*</div>
+      <div className='cell revealed mark' data-index={props.index}></div>
     );
   }
 
   function renderIncorrectMark(){
     return (
-      <div className='cell revealed mine false-positive' data-index={props.index}>*</div>
+      <div className='cell revealed mark false-positive' data-index={props.index}></div>
     );
   }
 
@@ -108,4 +108,6 @@ export default function Cell(props){
 
   return renderCell();
 
-};
+});
+
+export default Cell;
