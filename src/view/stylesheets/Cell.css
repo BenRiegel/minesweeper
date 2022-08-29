@@ -24,14 +24,14 @@
   font-size: 28px;
 }
 
-.cell.mark.revealed{
-  background-position: 1px 1px;
-}
-
 .cell.revealed{
   border: 1px solid #7b7b7b;
   border-right: 0px;
   border-bottom: 0px;
+}
+
+.cell.mark.revealed{
+  background-position: 1px 1px;
 }
 
 .cell.false-negative{
@@ -42,15 +42,13 @@
   position:relative;
 }
 
-.cell.false-positive:before{
+.cell.false-positive:before, .cell.false-positive:after{
   position: absolute;
   content: '';
   background: red;
   display: block;
   width: 130%;
   height: 2px;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
   left: -4px;
   right: 0;
   top: 0;
@@ -58,20 +56,14 @@
   margin: auto;
 }
 
+.cell.false-positive:before{
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
 .cell.false-positive:after{
-  position: absolute;
-  content: '';
-  background: red;
-  display: block;
-  width: 130%;
-  height: 2px;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
-  left: -4px;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
 }
 
 .contig-mines-1:after{

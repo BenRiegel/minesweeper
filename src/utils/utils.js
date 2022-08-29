@@ -1,5 +1,12 @@
+// module: utils.js
+// author: Ben Riegel
+// overview: defines and exports various helper functions
+
+
 //----- export code block ------------------------------------------------------
 
+//returns a specified number of random integers between zero and a specified
+//maximum value
 export function createRandoms( {numRandoms, rangeMax} ){
   let randoms = [];
   while (randoms.length < numRandoms){
@@ -11,6 +18,7 @@ export function createRandoms( {numRandoms, rangeMax} ){
   return randoms;
 }
 
+//converts a one-dimensional array to a two-dimensional array
 export function convertTo2DArray(array, numColumns){
   let rows = [];
   for (let j = 0; j < numColumns; j++){
@@ -20,16 +28,21 @@ export function convertTo2DArray(array, numColumns){
   return rows;
 }
 
-export function getIndex(rowIndex, columnIndex, numColumns){
-  return rowIndex * numColumns + columnIndex;
+//gets the index value in a 1d array from 2-d coordinates
+export function getIndex(rowNum, columnNum, numColumns){
+  return rowNum * numColumns + columnNum;
 }
 
+//gets the 2-d coordinates from index value in 1d array
 export function getRowColumn(index, numColumns){
   let row = Math.floor(index / numColumns);
   let column = (index % numColumns);
   return {row, column};
 }
 
+//function that, for any specified cell in a 2-d array, loops over its contiguous
+//cells and calls a callback; checks for edge cells that don't have all 8 contigous
+//cells
 export function doForContigCells(index, cells, {numRows, numColumns}, callback){
   let {row, column} = getRowColumn(index, numColumns);
   let maxRowIndex = numRows - 1;
@@ -51,6 +64,7 @@ export function doForContigCells(index, cells, {numRows, numColumns}, callback){
   }
 }
 
+//converts a number to a 3-digit string
 export function convertTo3Digit(num){
   if (num < 10){
     return ('00'+ num);

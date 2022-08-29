@@ -1,3 +1,9 @@
+// module: board.js
+// author: Ben Riegel
+// overview: defines and exports functions for creating and manipulating board
+// arrays.
+
+
 //----- imports ----------------------------------------------------------------
 
 import { doForContigCells } from '../utils/utils.js';
@@ -5,6 +11,7 @@ import { doForContigCells } from '../utils/utils.js';
 
 //----- local code block -------------------------------------------------------
 
+//if a swept cell has zero contiguous mines, it recursively sweeps those cells
 function sweepContigCells(board, field, dimensions, index){
   doForContigCells(index, board, dimensions, (contigCell, contigCellIndex) => {
     if (contigCell === null){
@@ -17,6 +24,8 @@ function sweepContigCells(board, field, dimensions, index){
   });
 }
 
+//checks board to see if there is a false negative (cell that is swept but
+//has a mine)
 function checkFalseNegative(board, field){
   return board.reduce( (prev, boardValue, index)=>{
      let fieldValue = field[index];
@@ -25,6 +34,8 @@ function checkFalseNegative(board, field){
    }, false);
 }
 
+//checks board to see if there is a false positive (cell that is marked but
+//does not have a mine)
 function checkFalsePositive(board, field){
   return board.reduce( (prev, boardValue, index)=>{
     let fieldValue = field[index];
@@ -33,6 +44,7 @@ function checkFalsePositive(board, field){
   }, false);
 }
 
+//checks to see if a board is complete (has all cells swept or marked)
 function checkBoardComplete(board){
   return board.reduce( (prev, boardValue)=>{
     let hasAction = (boardValue !== null);
@@ -43,10 +55,12 @@ function checkBoardComplete(board){
 
 //----- export code block ------------------------------------------------------
 
+//returns new board with the specified cell swept (and contiguous cells swept
+//if the specified cell has no contig mines)
 export function sweep(board, field, dimensions, cellIndex){
   let newBoard = [...board];
   let boardValue = newBoard[cellIndex];
-  if (boardValue === null){
+  if (boardValue === null){                           //check to make sure no other action associated with cell
     newBoard[cellIndex] = 'swept';
     let fieldValue = field[cellIndex];
     if (fieldValue === 0){
@@ -56,6 +70,7 @@ export function sweep(board, field, dimensions, cellIndex){
   return newBoard;
 }
 
+//returns new board with the mark toggled at the specified cell
 export function toggleMark(board, cellIndex){
   let newBoard = [...board];
   let boardValue = newBoard[cellIndex];
@@ -67,6 +82,8 @@ export function toggleMark(board, cellIndex){
   return newBoard;
 }
 
+//analyzes board and returns obj specifying whether the game is over
+//and if so, whether the user won
 export function analyzeBoard(board, field){
   let hasFalseNegative = checkFalseNegative(board, field);
   if (hasFalseNegative){
@@ -82,12 +99,14 @@ export function analyzeBoard(board, field){
   }
 }
 
+//calculates the number of marks on the board
 export function getNumMarks(board){
   return board.reduce( (sum, value) => {
     return sum + (value === 'marked' ? 1 : 0);
   }, 0);
 }
 
+//creates empty board
 export default function Board( {numRows, numColumns} ){
   let numCells = numRows * numColumns;
   let board = Array(numCells).fill(null);

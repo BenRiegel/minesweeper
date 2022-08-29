@@ -1,3 +1,10 @@
+// module: state.js
+// author: Ben Riegel
+// overview: defines and exports the main state reducer function and the
+// initial state value, which is based on the initial game level specified
+// in the config file
+
+
 //----- imports ----------------------------------------------------------------
 
 import Field from './field.js';
@@ -7,6 +14,7 @@ import { initLevel, getDimensions, getNumMines } from '../config/config.js';
 
 
 //----- local code block -------------------------------------------------------
+// this block contains reducer functions for specific state variables
 
 function levelReducer(prevState, action){
   let newValue;
@@ -78,6 +86,8 @@ function numMarksReducer(prevState, action, newBoard){
 
 //----- export code block ------------------------------------------------------
 
+// main reducer function; calculates new values for each state variable; returns
+// new value for state variable
 export function reducer(prevState, action){
   let newLevel = levelReducer(prevState, action);
   let newDimensions = getDimensions(newLevel);
@@ -100,6 +110,7 @@ export function reducer(prevState, action){
   };
 }
 
+//calculates the initial state variable
 const initState = reducer(null, {type:'init', newValue:initLevel} );
 
 export { initState };

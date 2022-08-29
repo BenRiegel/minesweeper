@@ -1,3 +1,9 @@
+// module: Clock.js
+// author: Ben Riegel
+// overview: defines and exports the Clock component, which keeps track of the
+// timing of the game
+
+
 //----- imports ----------------------------------------------------------------
 
 import { useEffect, useRef, useState } from 'react';
@@ -41,20 +47,25 @@ export default function Clock(props){
 
   //----- effects -----
 
+  //specifies the functions to call when the component mounts and unmounts
   useEffect( ()=>{
     start();
     return stop;
   }, []);
 
+  //checks a change in the gameOver prop; if the game is over, then the timer
+  //is stopped
   useEffect( ()=>{
     if (props.gameOver){
       stop();
     }
   }, [props.gameOver]);
 
+  //if the field array changes, then this means that there is a new game
+  //and the timer resets
   useEffect(reset, [props.field]);
 
-  //----- jsx -----
+  //----- jsx block -----
 
   return (
     <div className='clock-container'>

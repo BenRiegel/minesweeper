@@ -1,3 +1,8 @@
+// module: App.js
+// author: Ben Riegel
+// overview: defines and exports main App component
+
+
 //----- imports ----------------------------------------------------------------
 
 import { useReducer } from 'react';
@@ -16,6 +21,7 @@ export default function App(){
 
   //----- state variable -----
 
+  //reducer and initState variable specified in state.js file
   const [state, newStateAction] = useReducer(reducer, initState);
 
   //----- user actions -----

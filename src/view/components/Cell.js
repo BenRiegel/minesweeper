@@ -1,4 +1,7 @@
-//hidden, swept, marked, correct-mark, incorrect-non-mark, incorrect-mark
+// module: Cell.js
+// author: Ben Riegel
+// overview: defines and exports the Cell component
+
 
 //----- imports ----------------------------------------------------------------
 
@@ -8,10 +11,14 @@ import '../stylesheets/Cell.css';
 
 //----- export code block ------------------------------------------------------
 
+//React.memo used here to prevent unnecessary rerenders when the board state variable
+//is updated but the cell props are not changed; the Cell is a pure component
 const Cell = React.memo(function(props){
 
   //----- local functions -----
-
+  //each cell may have one of six states:
+  //hidden, swept, marked, correct-mark, incorrect-non-mark, incorrect-mark
+  //the calcState function determines which of these states the cell has
   function calcState(){
     let { gameOver, boardValue, fieldValue } = props;
     let isSwept = (boardValue === 'swept');
@@ -51,6 +58,10 @@ const Cell = React.memo(function(props){
 
   //----- jsx block -----
 
+  //the six functions below specify how the cell should be rendered based on
+  //which of the six states it has; want to keep each render functions
+  //separate in case I want to change how they are rendered at a later date
+
   function renderHidden(){
     return (
       <div className='cell hidden' data-index={props.index}></div>
@@ -89,6 +100,8 @@ const Cell = React.memo(function(props){
     );
   }
 
+  //function that determiens the current state and executes the appropriate
+  //render function
   function renderCell(){
     let state = calcState();
     if (state === 'hidden'){

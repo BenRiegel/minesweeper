@@ -1,3 +1,8 @@
+// module: Grid.js
+// author: Ben Riegel
+// overview: defines and exports the Grid component, which displays the game grid
+
+
 //----- imports ----------------------------------------------------------------
 
 import { useEffect } from 'react';
@@ -10,6 +15,9 @@ import '../stylesheets/Board.css';
 
 export default function Grid(props){
 
+  //----- local functions -----
+
+  //event handlers for left and right clicks
   function handleLeftClick(evt){
     if (evt.target.classList.contains('cell')){
       let cellIndex = Number(evt.target.dataset.index);
@@ -25,6 +33,10 @@ export default function Grid(props){
     }
   }
 
+  //----- effects -----
+
+  //adds right-click event listener on mount and removes it when the component
+  //unmounts
   useEffect( ()=>{
     document.addEventListener('contextmenu', handleRightClick);
     return ( ()=>{
@@ -34,10 +46,11 @@ export default function Grid(props){
 
   //----- jsx block -----
 
+  //renders the user board in a two-dimensional array
   function render(){
     let rows = convertTo2DArray(props.field, props.dimensions.numColumns);
     return (
-      <div className='board' onClick={props.gameOver ? null : handleLeftClick}>
+      <div className='board' onClick={handleLeftClick}>
         {
           rows.map( (row,i) => (
             <div className='row' key={'row-' + i}>
