@@ -20,11 +20,11 @@ const Cell = React.memo(function(props){
   //hidden, swept, marked, correct-mark, incorrect-non-mark, incorrect-mark
   //the calcState function determines which of these states the cell has
   function calcState(){
-    let { gameOver, boardValue, fieldValue } = props;
-    let isSwept = (boardValue === 'swept');
-    let isMarked = (boardValue === 'marked');
-    let noAction = (boardValue === null);
-    let hasMine = (fieldValue === 'mine');
+    const { gameOver, boardValue, fieldValue } = props;
+    const isSwept = (boardValue === 'swept');
+    const isMarked = (boardValue === 'marked');
+    const noAction = (boardValue === null);
+    const hasMine = (fieldValue === 'mine');
     if (gameOver){
       if (noAction){
         if (hasMine){
@@ -103,7 +103,7 @@ const Cell = React.memo(function(props){
   //function that determiens the current state and executes the appropriate
   //render function
   function renderCell(){
-    let state = calcState();
+    const state = calcState();
     if (state === 'hidden'){
       return renderHidden();
     } else if (state === 'marked'){

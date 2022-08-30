@@ -41,9 +41,9 @@ function createCellsWithNumContigMines(cells, dimensions){
 //creates empty cells, assigns value of 'mine' to those with mine indices
 //and assigns the number of contig mines for the non-mine cells
 function createCells(numCells, dimensions, mineIndices){
-  let emptyCells = Array(numCells).fill(null);
-  let cellsWithMines = createCellsWithMines(emptyCells, mineIndices);
-  let completeCells = createCellsWithNumContigMines(cellsWithMines, dimensions);
+  const emptyCells = Array(numCells).fill(null);
+  const cellsWithMines = createCellsWithMines(emptyCells, mineIndices);
+  const completeCells = createCellsWithNumContigMines(cellsWithMines, dimensions);
   return completeCells;
 }
 
@@ -53,8 +53,8 @@ function createCells(numCells, dimensions, mineIndices){
 //creates new Field array; cells with mines have the value 'mine'; all other cells
 //have a numerical value corresponding to the number of contiguous mines
 export default function Field(dimensions, numMines){
-  let numCells = dimensions.numRows * dimensions.numColumns;
-  let mineIndices = createRandoms( {numRandoms:numMines, rangeMax:numCells} );
-  let cells = createCells(numCells, dimensions, mineIndices);
+  const numCells = dimensions.numRows * dimensions.numColumns;
+  const mineIndices = createRandoms( {numRandoms:numMines, rangeMax:numCells} );
+  const cells = createCells(numCells, dimensions, mineIndices);
   return cells;
 }

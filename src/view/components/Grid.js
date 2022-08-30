@@ -20,7 +20,7 @@ export default function Grid(props){
   //event handlers for left and right clicks
   function handleLeftClick(evt){
     if (evt.target.classList.contains('cell')){
-      let cellIndex = Number(evt.target.dataset.index);
+      const cellIndex = Number(evt.target.dataset.index);
       props.onLeftClick(cellIndex);
     }
   }
@@ -28,7 +28,7 @@ export default function Grid(props){
   function handleRightClick(evt){
     evt.preventDefault();
     if (evt.target.classList.contains('cell')){
-      let cellIndex = Number(evt.target.dataset.index);
+      const cellIndex = Number(evt.target.dataset.index);
       props.onRightClick(cellIndex);
     }
   }
@@ -48,7 +48,7 @@ export default function Grid(props){
 
   //renders the user board in a two-dimensional array
   function render(){
-    let rows = convertTo2DArray(props.field, props.dimensions.numColumns);
+    const rows = convertTo2DArray(props.field, props.dimensions.numColumns);
     return (
       <div className='board' onClick={handleLeftClick}>
         {
@@ -56,7 +56,7 @@ export default function Grid(props){
             <div className='row' key={'row-' + i}>
               {
                 row.map( (cell,j) => {
-                  let index = getIndex(i, j, props.dimensions.numColumns);
+                  const index = getIndex(i, j, props.dimensions.numColumns);
                   return(
                     <Cell key={`${i}-${j}`}
                           index={index}

@@ -16,7 +16,7 @@ function sweepContigCells(board, field, dimensions, index){
   doForContigCells(index, board, dimensions, (contigCell, contigCellIndex) => {
     if (contigCell === null){
       board[contigCellIndex] = 'swept';
-      let fieldValue = field[contigCellIndex];
+      const fieldValue = field[contigCellIndex];
       if (fieldValue === 0){
         sweepContigCells(board, field, dimensions, contigCellIndex);
       }
@@ -28,8 +28,8 @@ function sweepContigCells(board, field, dimensions, index){
 //has a mine)
 function checkFalseNegative(board, field){
   return board.reduce( (prev, boardValue, index)=>{
-     let fieldValue = field[index];
-     let isFalseNegative = (boardValue === 'swept' && fieldValue === 'mine');
+     const fieldValue = field[index];
+     const isFalseNegative = (boardValue === 'swept' && fieldValue === 'mine');
      return (prev || isFalseNegative);
    }, false);
 }
@@ -38,8 +38,8 @@ function checkFalseNegative(board, field){
 //does not have a mine)
 function checkFalsePositive(board, field){
   return board.reduce( (prev, boardValue, index)=>{
-    let fieldValue = field[index];
-    let isFalsePositive = (boardValue === 'marked' && fieldValue !== 'mine');
+    const fieldValue = field[index];
+    const isFalsePositive = (boardValue === 'marked' && fieldValue !== 'mine');
     return (prev || isFalsePositive);
   }, false);
 }
@@ -47,7 +47,7 @@ function checkFalsePositive(board, field){
 //checks to see if a board is complete (has all cells swept or marked)
 function checkBoardComplete(board){
   return board.reduce( (prev, boardValue)=>{
-    let hasAction = (boardValue !== null);
+    const hasAction = (boardValue !== null);
     return (prev && hasAction);
   }, true);
 }
@@ -59,10 +59,10 @@ function checkBoardComplete(board){
 //if the specified cell has no contig mines)
 export function sweep(board, field, dimensions, cellIndex){
   let newBoard = [...board];
-  let boardValue = newBoard[cellIndex];
+  const boardValue = newBoard[cellIndex];
   if (boardValue === null){                           //check to make sure no other action associated with cell
     newBoard[cellIndex] = 'swept';
-    let fieldValue = field[cellIndex];
+    const fieldValue = field[cellIndex];
     if (fieldValue === 0){
       sweepContigCells(newBoard, field, dimensions, cellIndex);
     }
@@ -73,7 +73,7 @@ export function sweep(board, field, dimensions, cellIndex){
 //returns new board with the mark toggled at the specified cell
 export function toggleMark(board, cellIndex){
   let newBoard = [...board];
-  let boardValue = newBoard[cellIndex];
+  const boardValue = newBoard[cellIndex];
   if (boardValue === null){
     newBoard[cellIndex] = 'marked';
   } else if (boardValue === 'marked'){
@@ -85,15 +85,15 @@ export function toggleMark(board, cellIndex){
 //analyzes board and returns obj specifying whether the game is over
 //and if so, whether the user won
 export function analyzeBoard(board, field){
-  let hasFalseNegative = checkFalseNegative(board, field);
+  const hasFalseNegative = checkFalseNegative(board, field);
   if (hasFalseNegative){
     return {gameOver:true, didWin:false};
   }
-  let boardComplete = checkBoardComplete(board);
+  const boardComplete = checkBoardComplete(board);
   if (!boardComplete){
     return {gameOver:false, didWin:null};
   }
-  let hasFalsePositive = checkFalsePositive(board, field);
+  const hasFalsePositive = checkFalsePositive(board, field);
   if (!hasFalsePositive){
     return {gameOver:true, didWin:true};
   }
@@ -108,7 +108,7 @@ export function getNumMarks(board){
 
 //creates empty board
 export default function Board( {numRows, numColumns} ){
-  let numCells = numRows * numColumns;
-  let board = Array(numCells).fill(null);
+  const numCells = numRows * numColumns;
+  const board = Array(numCells).fill(null);
   return board;
 }

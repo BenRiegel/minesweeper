@@ -89,15 +89,15 @@ function numMarksReducer(prevState, action, newBoard){
 // main reducer function; calculates new values for each state variable; returns
 // new value for state variable
 export function reducer(prevState, action){
-  let newLevel = levelReducer(prevState, action);
-  let newDimensions = getDimensions(newLevel);
-  let newNumMines = getNumMines(newLevel);
-  let newField = fieldReducer(prevState, action, newDimensions, newNumMines);
-  let newBoard = boardReducer(prevState, action, newField, newDimensions);
-  let newNumMarks = numMarksReducer(prevState, action, newBoard);
-  let gameAnalysis = analyzeBoard(newBoard, newField);
-  let newGameOver = gameAnalysis.gameOver;
-  let newDidWin = gameAnalysis.didWin;
+  const newLevel = levelReducer(prevState, action);
+  const newDimensions = getDimensions(newLevel);
+  const newNumMines = getNumMines(newLevel);
+  const newField = fieldReducer(prevState, action, newDimensions, newNumMines);
+  const newBoard = boardReducer(prevState, action, newField, newDimensions);
+  const newNumMarks = numMarksReducer(prevState, action, newBoard);
+  const gameAnalysis = analyzeBoard(newBoard, newField);
+  const newGameOver = gameAnalysis.gameOver;
+  const newDidWin = gameAnalysis.didWin;
   return {
     level: newLevel,
     dimensions: newDimensions,

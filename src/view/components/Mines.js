@@ -17,8 +17,8 @@ export default function Mines( {numMines, numMarks} ){
   //----- jsx block -----
 
   function render(){
-    let numRemaining = numMines - numMarks;
-    let numRemaining3Digit = convertTo3Digit(numRemaining);
+    const numRemaining = numMines - numMarks;
+    const numRemaining3Digit = convertTo3Digit(numRemaining);
     return (
       <div className='mines-container'>
         <div className='mines'> {numRemaining3Digit} </div>

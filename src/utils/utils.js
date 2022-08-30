@@ -35,8 +35,8 @@ export function getIndex(rowNum, columnNum, numColumns){
 
 //gets the 2-d coordinates from index value in 1d array
 export function getRowColumn(index, numColumns){
-  let row = Math.floor(index / numColumns);
-  let column = (index % numColumns);
+  const row = Math.floor(index / numColumns);
+  const column = (index % numColumns);
   return {row, column};
 }
 
@@ -44,21 +44,21 @@ export function getRowColumn(index, numColumns){
 //cells and calls a callback; checks for edge cells that don't have all 8 contigous
 //cells
 export function doForContigCells(index, cells, {numRows, numColumns}, callback){
-  let {row, column} = getRowColumn(index, numColumns);
-  let maxRowIndex = numRows - 1;
-  let maxColumnIndex = numColumns - 1;
-  let surroundingIndices = [ [row-1, column-1],
-                             [row-1, column],
-                             [row-1, column+1],
-                             [row, column-1],
-                             [row, column+1],
-                             [row+1, column-1],
-                             [row+1, column],
-                             [row+1, column+1] ];
+  const {row, column} = getRowColumn(index, numColumns);
+  const maxRowIndex = numRows - 1;
+  const maxColumnIndex = numColumns - 1;
+   const surroundingIndices = [ [row-1, column-1],
+                                [row-1, column],
+                                [row-1, column+1],
+                                [row, column-1],
+                                [row, column+1],
+                                [row+1, column-1],
+                                [row+1, column],
+                                [row+1, column+1] ];
   for (let [i, j] of surroundingIndices){
     if (i>=0 && i<=maxRowIndex && j>=0 && j<=maxColumnIndex){
-      let contigCellIndex = getIndex(i, j, numColumns);
-      let contigCell = cells[contigCellIndex];
+      const contigCellIndex = getIndex(i, j, numColumns);
+      const contigCell = cells[contigCellIndex];
       callback(contigCell, contigCellIndex);
     }
   }

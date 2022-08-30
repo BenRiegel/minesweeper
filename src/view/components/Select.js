@@ -17,7 +17,7 @@ export default function Select(props){
 
   //handles the new value event
   function handleValueChange(evt){
-    let selectedValue = evt.target.value;
+    const selectedValue = evt.target.value;
     props.onChange(selectedValue);
   }
 
